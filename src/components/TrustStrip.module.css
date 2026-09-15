@@ -1,0 +1,66 @@
+.section {
+  position: relative;
+  background: var(--ink);
+  padding-block: var(--space-lg);
+  overflow: hidden;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.2rem + 1.6vw, 2.75rem);
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--on-dark-muted);
+  white-space: nowrap;
+  padding-inline: var(--space-lg);
+  transition: color var(--dur-med) var(--ease-out), -webkit-text-stroke-color var(--dur-med) var(--ease-out);
+}
+
+.item:hover {
+  color: var(--gold-soft);
+  -webkit-text-stroke: 1px var(--gold-soft);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  margin-left: var(--space-lg);
+  -webkit-text-stroke: 0;
+  flex-shrink: 0;
+  animation: dotPulse 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes dotPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
+  }
+}
+
+.cta {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: var(--space-lg);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.875rem);
+  color: var(--gold-soft);
+}

@@ -1,0 +1,577 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-2xl) var(--space-xl);
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+/* ---------- Decorative globe (top right) ---------- */
+.globe {
+  position: absolute;
+  top: -4%;
+  right: -14%;
+  width: min(42rem, 58vw);
+  aspect-ratio: 1;
+  pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .globe {
+    display: block;
+  }
+}
+
+.globeClip {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.globeImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  filter: saturate(1.1);
+  animation: globeSpin 90s linear infinite;
+}
+
+@keyframes globeSpin {
+  from {
+    transform: rotate(0deg) scale(1.02);
+  }
+  to {
+    transform: rotate(360deg) scale(1.02);
+  }
+}
+
+.globeGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(200, 151, 76, 0.25), transparent 55%);
+  box-shadow: inset 0 0 100px rgba(200, 151, 76, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globeImg {
+    animation: none;
+  }
+}
+
+/* ---------- Floating orbit dots around the globe ---------- */
+.orbitDot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 12px 2px rgba(200, 151, 76, 0.6);
+}
+
+.orbitDot1 {
+  top: 8%;
+  left: -3%;
+  animation: orbitFloat1 7s var(--ease-in-out) infinite;
+}
+
+.orbitDot2 {
+  bottom: 12%;
+  left: 6%;
+  width: 6px;
+  height: 6px;
+  animation: orbitFloat2 9s var(--ease-in-out) infinite;
+}
+
+.orbitDot3 {
+  top: 46%;
+  right: -2%;
+  width: 5px;
+  height: 5px;
+  animation: orbitFloat3 6s var(--ease-in-out) infinite;
+}
+
+@keyframes orbitFloat1 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-10px, 14px);
+    opacity: 1;
+  }
+}
+
+@keyframes orbitFloat2 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(8px, -16px);
+    opacity: 1;
+  }
+}
+
+@keyframes orbitFloat3 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(12px, 10px);
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbitDot {
+    animation: none;
+  }
+}
+
+/* ---------- Diagonal line + "Ideas / Industries / Impact" ---------- */
+.sideLine {
+  position: absolute;
+  top: 8%;
+  left: 54%;
+  display: none;
+  align-items: flex-start;
+  gap: 1rem;
+  transform: rotate(4deg);
+  transform-origin: top left;
+}
+
+@media (min-width: 1100px) {
+  .sideLine {
+    display: flex;
+  }
+}
+
+.sideLineSvg {
+  width: 1px;
+  height: 12rem;
+}
+
+.sideLineText {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--on-dark-muted);
+  transform: translateX(-1.2rem);
+}
+
+/* ---------- "TECH / PEOPLE / PROGRESS" kicker ---------- */
+.techKicker {
+  position: absolute;
+  top: 9%;
+  right: 4%;
+  display: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1.8;
+  color: var(--on-dark-muted);
+  text-align: right;
+}
+
+@media (min-width: 1100px) {
+  .techKicker {
+    display: block;
+  }
+}
+
+.techKickerDash {
+  display: block;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--ink-line-strong);
+  margin-top: 0.6rem;
+  margin-left: auto;
+}
+
+.header {
+  position: relative;
+  z-index: 1;
+  max-width: 42rem;
+  margin-bottom: var(--space-xl);
+}
+
+.eyebrowRow {
+  margin-bottom: var(--space-sm);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  color: var(--on-dark);
+}
+
+.description {
+  margin-top: var(--space-sm);
+  font-size: var(--fs-body-lg);
+  color: var(--on-dark-muted);
+  max-width: 40ch;
+}
+
+/* ---------- Carousel ---------- */
+.carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.track {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-inline: var(--container-pad);
+  padding-block: 3.25rem 2.25rem;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.track:active {
+  cursor: grabbing;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.cardOuter {
+  flex: 0 0 auto;
+  width: min(15.5rem, 76vw);
+  aspect-ratio: 3 / 4;
+  scroll-snap-align: start;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--ink-line);
+  background: var(--ink-soft);
+  padding: 1.5rem 1.5rem 0;
+  overflow: hidden;
+  transition: border-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+}
+
+/* Gold border lights up under the pointer, on any card. */
+.card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold), var(--shadow-lg);
+}
+
+/* The centered card pops out — larger, lifted, gold-rimmed, elevated shadow.
+   The ring + shadow breathe gently so the "in front" card reads as alive, not just bigger. */
+.cardCenter {
+  border-color: var(--gold);
+  animation: centerBreathe 2.6s ease-in-out infinite;
+}
+
+@keyframes centerBreathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px var(--gold), 0 28px 56px rgba(0, 0, 0, 0.38), 0 6px 18px rgba(0, 0, 0, 0.22);
+  }
+  50% {
+    box-shadow: 0 0 0 1.5px var(--gold-soft), 0 40px 78px rgba(0, 0, 0, 0.48), 0 10px 26px rgba(0, 0, 0, 0.28);
+  }
+}
+
+.cardShine {
+  position: absolute;
+  inset: -40% -60%;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(243, 239, 230, 0.16) 48%,
+    rgba(243, 239, 230, 0.16) 52%,
+    transparent 60%
+  );
+  transform: translateX(-60%);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+  pointer-events: none;
+}
+
+.card:hover .cardShine {
+  opacity: 1;
+  transform: translateX(60%);
+  transition: transform 0.9s var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+
+.cardTop {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.number {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--on-dark-muted);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-med) var(--ease-out);
+}
+
+.card:hover .number,
+.cardCenter .number {
+  color: var(--gold-soft);
+}
+
+.cardIcon {
+  display: inline-flex;
+  color: var(--gold);
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.card:hover .cardIcon,
+.cardCenter .cardIcon {
+  transform: scale(1.15) rotate(-8deg);
+}
+
+.cardTitle {
+  margin-top: 1.1rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--on-dark);
+}
+
+.cardSubtitle {
+  margin-top: 0.4rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--on-dark-muted);
+}
+
+.cardImageWrap {
+  position: relative;
+  margin-top: auto;
+  margin-inline: -1.5rem;
+  margin-bottom: 0;
+  height: 42%;
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.35) brightness(0.75) contrast(1.05);
+  transition: transform var(--dur-slow) var(--ease-out), filter var(--dur-med) var(--ease-out);
+}
+
+.card:hover .cardImage,
+.cardCenter .cardImage {
+  transform: scale(1.06);
+  filter: grayscale(0) brightness(0.95) contrast(1.05);
+}
+
+.cardImageScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--ink-soft) 0%, rgba(22, 20, 15, 0) 28%, rgba(22, 20, 15, 0) 100%);
+}
+
+.cardImageGlow {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+  height: 2px;
+  background: var(--gold);
+  opacity: 0;
+  filter: blur(1px);
+  box-shadow: 0 0 16px 2px var(--gold);
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.card:hover .cardImageGlow {
+  opacity: 0.85;
+}
+
+.navBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid var(--ink-line-strong);
+  color: var(--on-dark-muted);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+@media (min-width: 900px) {
+  .navBtn {
+    display: inline-flex;
+  }
+}
+
+.navBtn:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.navPrev {
+  margin-left: clamp(1rem, 3vw, 2rem);
+  transform: scaleX(-1);
+}
+
+.navPrev:hover {
+  transform: scaleX(-1) translateX(3px);
+}
+
+.navNext {
+  margin-right: clamp(1rem, 3vw, 2rem);
+}
+
+.navNext:hover {
+  transform: translateX(3px);
+}
+
+/* ---------- Clickable pagination dots ---------- */
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--space-md);
+  padding-inline: var(--container-pad);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-pill);
+  background: var(--ink-line-strong);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width var(--dur-med) var(--ease-out), background-color var(--dur-med) var(--ease-out);
+}
+
+.dot:hover {
+  background: var(--gold-soft);
+}
+
+.dotActive {
+  width: 22px;
+  background: var(--gold);
+}
+
+/* ---------- Footer row ---------- */
+.footerRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--ink-line);
+}
+
+.footerKicker {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-dark-muted);
+  white-space: nowrap;
+}
+
+.footerLine {
+  flex: 1;
+  height: 1px;
+  background: var(--ink-line-strong);
+  display: none;
+}
+
+@media (min-width: 700px) {
+  .footerLine {
+    display: block;
+  }
+}
+
+.exploreBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--on-dark);
+  border: 1px solid var(--ink-line-strong);
+  border-radius: var(--radius-pill);
+  padding: 0.85em 1.5em;
+  white-space: nowrap;
+  margin-left: auto;
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.exploreBtn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-tint);
+}
+
+.exploreBtn svg {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.exploreBtn:hover svg {
+  transform: translateX(3px);
+}
+
+/* ---------- Vertical pagination (far right edge) ---------- */
+.pagination {
+  position: absolute;
+  right: clamp(1rem, 3vw, 2.5rem);
+  bottom: var(--space-xl);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .pagination {
+    display: flex;
+  }
+}
+
+.paginationLine {
+  width: 1px;
+  height: 4.5rem;
+  background: var(--ink-line-strong);
+}
+
+.paginationDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  margin-top: -3.5px;
+  transition: transform var(--dur-med) var(--ease-out);
+}

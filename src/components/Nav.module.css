@@ -1,0 +1,310 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding-block: var(--space-md);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: padding var(--dur-med) var(--ease-out), background-color var(--dur-med) var(--ease-out),
+    border-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out),
+    transform var(--dur-med) var(--ease-out);
+}
+
+.nav.scrolled {
+  padding-block: var(--space-2xs);
+  background: rgba(10, 9, 8, 0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ink-line);
+  box-shadow: var(--shadow-md);
+}
+
+.nav.hidden {
+  transform: translateY(-100%);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--on-dark);
+  flex-shrink: 0;
+}
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-sm);
+  background: var(--gold);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  transition: transform var(--dur-med) var(--ease-out), background-color var(--dur-med) var(--ease-out);
+}
+
+.logo:hover .mark {
+  transform: rotate(-8deg) scale(1.08);
+  background: var(--gold-soft);
+}
+
+.logoText {
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .logoText {
+    display: inline;
+  }
+}
+
+.kicker {
+  display: none;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-dark-muted);
+  white-space: nowrap;
+}
+
+@media (min-width: 1280px) {
+  .kicker {
+    display: inline-flex;
+  }
+}
+
+.links {
+  position: relative;
+  display: none;
+  align-items: flex-start;
+  gap: 2px;
+  padding-top: 4px;
+}
+
+@media (min-width: 900px) {
+  .links {
+    display: flex;
+  }
+}
+
+.arcLine {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: -14px;
+  height: 40px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.arcLine svg {
+  width: 100%;
+  height: 100%;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+}
+
+.iconRing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--ink-line-strong);
+  color: var(--on-dark-muted);
+  background: rgba(10, 9, 8, 0.3);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+
+.link:hover .iconRing,
+.linkActive .iconRing {
+  color: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-tint);
+  background: rgba(200, 151, 76, 0.08);
+}
+
+.linkLabel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--on-dark-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.link:hover .linkLabel,
+.linkActive .linkLabel {
+  color: var(--gold);
+}
+
+.flyout {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform-origin: top center;
+  translate: -50% 0;
+  width: max-content;
+  max-width: 18rem;
+  padding: 1.4rem 1.6rem;
+  border-radius: var(--radius-md);
+  background: rgba(15, 13, 10, 0.96);
+  border: 1px solid var(--ink-line-strong);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(18px);
+  z-index: 5;
+}
+
+.flyoutPreview {
+  font-size: 0.9375rem;
+  color: var(--gold-soft);
+  width: 15rem;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.moreButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-top: 0.35rem;
+  border-radius: 50%;
+  border: 1px solid var(--ink-line-strong);
+  color: var(--on-dark-muted);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.moreButton:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+  transform: rotate(90deg);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.navCta {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .navCta {
+    display: inline-flex;
+  }
+}
+
+.menuToggle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0.5rem;
+  z-index: 110;
+}
+
+.menuToggle span {
+  width: 22px;
+  height: 1.4px;
+  background: var(--on-dark);
+  display: block;
+  transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+
+.menuToggle.open span:nth-child(1) {
+  transform: translateY(6.4px) rotate(45deg);
+}
+
+.menuToggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menuToggle.open span:nth-child(3) {
+  transform: translateY(-6.4px) rotate(-45deg);
+}
+
+@media (min-width: 900px) {
+  .menuToggle {
+    display: none;
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  z-index: 105;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--container-pad);
+}
+
+.overlayLinks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.overlayLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 700;
+  color: var(--on-dark);
+  transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.overlayLink:hover {
+  color: var(--gold-soft);
+  transform: translateX(10px);
+}
+
+.overlayIcon {
+  color: var(--gold);
+  flex-shrink: 0;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.overlayLink:hover .overlayIcon {
+  transform: scale(1.15) rotate(-6deg);
+}

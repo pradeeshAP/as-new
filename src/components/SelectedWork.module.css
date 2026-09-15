@@ -1,0 +1,528 @@
+.section {
+  position: relative;
+  padding-block: var(--space-2xl) var(--space-xl);
+  overflow: hidden;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+@media (min-width: 1000px) {
+  .layout {
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: var(--space-2xl);
+  }
+}
+
+/* ---------- Left: copy + decorative artwork ---------- */
+.left {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+@media (min-width: 1000px) {
+  .left {
+    position: sticky;
+    top: 7rem;
+    align-self: start;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.heading {
+  margin-top: var(--space-sm);
+  font-size: var(--fs-h2);
+  line-height: 1.02;
+  max-width: 14ch;
+}
+
+.accent {
+  color: var(--gold-dark);
+}
+
+.description {
+  margin-top: var(--space-sm);
+  font-size: var(--fs-body-lg);
+  color: var(--text-secondary);
+  max-width: 30rem;
+}
+
+/* ---------- Decorative artwork block ---------- */
+.artwork {
+  position: relative;
+  margin-top: var(--space-lg);
+  padding-bottom: var(--space-md);
+}
+
+.ring {
+  display: none;
+  position: absolute;
+  top: -3.5rem;
+  left: -4rem;
+  width: 26rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px dashed var(--border-strong);
+  pointer-events: none;
+  animation: ringSpin 60s linear infinite;
+}
+
+@media (min-width: 1000px) {
+  .ring {
+    display: block;
+  }
+}
+
+@keyframes ringSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring {
+    animation: none;
+  }
+}
+
+.sideTag {
+  display: none;
+  position: absolute;
+  top: -1.6rem;
+  left: -0.5rem;
+  z-index: 1;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+@media (min-width: 1000px) {
+  .sideTag {
+    display: block;
+  }
+}
+
+.sideTagUnderline {
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  margin-top: 0.5rem;
+  background: var(--gold);
+  border-radius: var(--radius-pill);
+}
+
+.circleFrame {
+  position: relative;
+  z-index: 1;
+  width: min(20rem, 68%);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 1000px) {
+  .circleFrame {
+    margin-inline: 10% 0;
+  }
+}
+
+.circleImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.circleScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(200deg, rgba(10, 9, 8, 0.05) 0%, rgba(10, 9, 8, 0.4) 100%);
+}
+
+.footTag {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: 4.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+@media (min-width: 1000px) {
+  .footTag {
+    display: block;
+  }
+}
+
+.progress {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--space-md);
+  width: min(20rem, 68%);
+  margin-inline: auto;
+}
+
+@media (min-width: 1000px) {
+  .progress {
+    margin-inline: 10% 0;
+  }
+}
+
+.progressTrack {
+  position: relative;
+  display: block;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--border-strong);
+  overflow: hidden;
+}
+
+.progressFill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: var(--gold);
+  border-radius: inherit;
+}
+
+.progressDots {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.6rem;
+}
+
+.progressDot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  transition: color var(--dur-med) var(--ease-out), background-color var(--dur-med) var(--ease-out),
+    transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+}
+
+.progressDotActive {
+  color: var(--ink);
+  background: var(--gold);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-gold);
+}
+
+/* ---------- Right: project timeline ---------- */
+.right {
+  position: relative;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .right {
+    padding-left: 2.75rem;
+  }
+
+  .right::before {
+    content: "";
+    position: absolute;
+    left: 0.3rem;
+    top: 0.85rem;
+    bottom: 5.5rem;
+    width: 1px;
+    background: var(--border-strong);
+  }
+}
+
+.entry {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding-block: var(--space-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.entry:first-child {
+  padding-top: 0;
+}
+
+.entryDot {
+  display: none;
+  position: absolute;
+  left: -2.45rem;
+  top: 1rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  transition: background-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out),
+    transform var(--dur-med) var(--ease-out);
+}
+
+@media (min-width: 640px) {
+  .entryDot {
+    display: block;
+  }
+}
+
+.entryActive .entryDot {
+  background: var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-tint);
+  transform: scale(1.15);
+}
+
+.entryNumber {
+  position: relative;
+  flex-shrink: 0;
+  padding-bottom: 0.7rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-index);
+  font-weight: 600;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-med) var(--ease-out);
+}
+
+.entryNumber::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1.4rem;
+  height: 2px;
+  background: var(--border-strong);
+  transition: background-color var(--dur-med) var(--ease-out), width var(--dur-med) var(--ease-out);
+}
+
+.entryActive .entryNumber {
+  color: var(--text);
+}
+
+.entryActive .entryNumber::after {
+  background: var(--gold);
+  width: 2rem;
+}
+
+.entryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.entryHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem 1rem;
+}
+
+.entryName {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.2rem + 1.6vw, 2.25rem);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  transition: color var(--dur-med) var(--ease-out);
+}
+
+.entryActive .entryName {
+  color: var(--gold-dark);
+}
+
+.entryType {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.entryVisual {
+  position: relative;
+  width: 100%;
+  height: clamp(9rem, 6.5rem + 10vw, 12.5rem);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
+}
+
+.entry:hover .entryVisual {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+
+.entryImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.entry:hover .entryImg {
+  transform: scale(1.1);
+}
+
+.entryScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 9, 8, 0.5) 0%,
+    rgba(10, 9, 8, 0) 32%,
+    rgba(10, 9, 8, 0) 62%,
+    rgba(10, 9, 8, 0.55) 100%
+  );
+}
+
+.entryTagline {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.6;
+  color: var(--on-dark);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+.entryArrow {
+  position: absolute;
+  bottom: 1.1rem;
+  right: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(243, 239, 230, 0.5);
+  color: var(--on-dark);
+  backdrop-filter: blur(6px);
+  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.entry:hover .entryArrow {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+  transform: translate(3px, -3px);
+}
+
+/* ---------- Scroll cue ---------- */
+.scrollCue {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+}
+
+.scrollCueText {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.scrollCueLine {
+  flex: 1;
+  height: 1px;
+  background: var(--border-strong);
+  display: none;
+}
+
+@media (min-width: 500px) {
+  .scrollCueLine {
+    display: block;
+  }
+}
+
+.scrollCueBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  color: var(--gold-dark);
+  animation: cueBob 2.6s var(--ease-in-out) infinite;
+  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.scrollCueBtn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+@keyframes cueBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollCueBtn {
+    animation: none;
+  }
+}

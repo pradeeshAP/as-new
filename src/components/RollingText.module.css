@@ -1,0 +1,54 @@
+.rollingText {
+  display: inline;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.space {
+  white-space: pre;
+}
+
+.letter {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  perspective: 480px;
+}
+
+.sizer {
+  visibility: hidden;
+  white-space: pre;
+}
+
+.drum {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  line-height: var(--step, 1.4em);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(calc(var(--step, 1.4em) / 2));
+}
+
+.faceBack {
+  transform: rotateX(180deg) translateZ(calc(var(--step, 1.4em) / 2));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drum {
+    transform: none !important;
+  }
+}

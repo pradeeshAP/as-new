@@ -1,0 +1,110 @@
+.section {
+  background: var(--ink);
+  color: var(--on-dark);
+  padding-block: var(--space-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 40rem;
+  height: 40rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-tint) 0%, transparent 70%);
+  pointer-events: none;
+  animation: ctaGlowPulse 8s var(--ease-in-out) infinite;
+}
+
+@keyframes ctaGlowPulse {
+  0%,
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.15) translate(-3%, 3%);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section::before {
+    animation: none;
+  }
+}
+
+.ghostRow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ghostText {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-giant);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink-line-strong);
+  padding-inline: 0.15em;
+}
+
+.inner {
+  max-width: 46rem;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  color: var(--gold-soft);
+  background: rgba(200, 151, 76, 0.14);
+  border-color: rgba(200, 151, 76, 0.35);
+  position: relative;
+  z-index: 1;
+}
+
+.heading {
+  color: var(--on-dark);
+  font-size: clamp(2.25rem, 1.5rem + 4.2vw, 5.5rem);
+  font-weight: 700;
+  margin-top: var(--space-sm);
+  max-width: 16ch;
+  position: relative;
+  z-index: 1;
+}
+
+.description {
+  color: var(--on-dark-muted);
+  font-size: var(--fs-body-lg);
+  max-width: 40ch;
+  margin-top: var(--space-sm);
+}
+
+.cta {
+  margin-top: var(--space-md);
+}
+
+.corner {
+  position: absolute;
+  right: clamp(1rem, 4vw, 4rem);
+  bottom: clamp(1rem, 4vw, 4rem);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  color: var(--on-dark-muted);
+  display: none;
+}
+
+@media (min-width: 800px) {
+  .corner {
+    display: block;
+  }
+}

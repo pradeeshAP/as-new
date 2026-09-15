@@ -1,0 +1,49 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.wrap.center {
+  align-items: center;
+  text-align: center;
+}
+
+.eyebrowRow {
+  display: flex;
+  align-items: center;
+}
+
+.center .eyebrowRow {
+  justify-content: center;
+}
+
+.heading {
+  font-size: var(--fs-h2);
+  color: var(--text);
+  max-width: 42ch;
+}
+
+.center .heading {
+  max-width: 32ch;
+  margin-inline: auto;
+}
+
+.description {
+  font-size: var(--fs-body-lg);
+  color: var(--text-secondary);
+  max-width: 46ch;
+  font-weight: 400;
+}
+
+.onDark .heading {
+  color: var(--on-dark);
+}
+
+.onDark .description {
+  color: var(--on-dark-muted);
+}
+
+.center .description {
+  margin-inline: auto;
+}

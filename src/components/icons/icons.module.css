@@ -1,0 +1,611 @@
+/* Shared icon primitives */
+.svg {
+  display: block;
+  overflow: visible;
+}
+
+.wrap {
+  display: inline-flex;
+  line-height: 0;
+}
+
+/* ---------- Heart / heartbeat ---------- */
+.heart {
+  transform-origin: 50% 55%;
+}
+.playing .heart {
+  animation: heartBeat 0.9s ease-out;
+}
+.pulseLine {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+}
+.playing .pulseLine {
+  animation: pulseSweep 0.9s ease-out;
+}
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.18);
+  }
+  35% {
+    transform: scale(0.96);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  70% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes pulseSweep {
+  0% {
+    stroke-dashoffset: 30;
+  }
+  60% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- Coins (finance) ---------- */
+.coinTop {
+  transform-origin: 50% 100%;
+}
+.playing .coinTop {
+  animation: coinBounce 0.8s var(--ease-out, ease-out);
+}
+@keyframes coinBounce {
+  0% {
+    transform: translateY(0) scaleY(1);
+  }
+  30% {
+    transform: translateY(-3px) scaleY(1.05);
+  }
+  55% {
+    transform: translateY(0.5px) scaleY(0.94);
+  }
+  75% {
+    transform: translateY(-1px) scaleY(1.02);
+  }
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+/* ---------- Graduation cap (education) ---------- */
+.capTop {
+  transform-origin: 50% 60%;
+}
+.playing .capTop {
+  animation: capToss 0.8s ease-out;
+}
+.tassel {
+  transform-origin: 50% 0%;
+}
+.playing .tassel {
+  animation: tasselSwing 0.9s ease-out;
+}
+@keyframes capToss {
+  0% {
+    transform: rotate(0) translateY(0);
+  }
+  35% {
+    transform: rotate(-6deg) translateY(-2px);
+  }
+  65% {
+    transform: rotate(4deg) translateY(0);
+  }
+  100% {
+    transform: rotate(0) translateY(0);
+  }
+}
+@keyframes tasselSwing {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(14deg);
+  }
+  55% {
+    transform: rotate(-10deg);
+  }
+  80% {
+    transform: rotate(4deg);
+  }
+}
+
+/* ---------- Shopping bag (retail) ---------- */
+.bag {
+  transform-origin: 50% 8%;
+}
+.playing .bag {
+  animation: bagSwing 0.9s ease-out;
+}
+@keyframes bagSwing {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(7deg);
+  }
+  55% {
+    transform: rotate(-6deg);
+  }
+  80% {
+    transform: rotate(2deg);
+  }
+}
+
+/* ---------- Cart (retail) ---------- */
+.cartBody {
+  transform-origin: 50% 100%;
+}
+.playing .cartBody {
+  animation: cartRoll 0.8s ease-out;
+}
+@keyframes cartRoll {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(1.5px);
+  }
+  70% {
+    transform: translateX(-0.5px);
+  }
+}
+
+/* ---------- Factory (manufacturing) ---------- */
+.smoke {
+  transform-origin: 50% 100%;
+  opacity: 0.8;
+}
+.playing .smoke {
+  animation: smokeDrift 1s ease-out;
+}
+.playing .smoke:nth-child(5) {
+  animation-delay: 0.15s;
+}
+@keyframes smokeDrift {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-4px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ---------- Gear (manufacturing) ---------- */
+.gear {
+  transform-origin: 50% 50%;
+}
+.playing .gear {
+  animation: gearSpin 0.9s ease-out;
+}
+@keyframes gearSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(120deg);
+  }
+}
+
+/* ---------- Truck (logistics) ---------- */
+.truckBody {
+  transform-origin: 50% 100%;
+}
+.playing .truckBody {
+  animation: truckBounce 0.8s ease-out;
+}
+.wheel {
+  transform-origin: center;
+}
+.playing .wheel {
+  animation: wheelSpin 0.8s linear;
+}
+@keyframes truckBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-1.2px);
+  }
+  60% {
+    transform: translateY(0.4px);
+  }
+}
+@keyframes wheelSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(300deg);
+  }
+}
+
+/* ---------- Building (real estate) ---------- */
+.window {
+  transition: opacity 0.2s ease-out;
+  opacity: 0.35;
+}
+.playing .window {
+  animation: windowGlow 0.9s ease-out;
+}
+.playing .window:nth-child(2) {
+  animation-delay: 0.08s;
+}
+.playing .window:nth-child(3) {
+  animation-delay: 0.16s;
+}
+.playing .window:nth-child(4) {
+  animation-delay: 0.24s;
+}
+@keyframes windowGlow {
+  0% {
+    opacity: 0.35;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.35;
+  }
+}
+
+/* ---------- Handshake (non-profit) ---------- */
+.handLeft {
+  transform-origin: 0% 50%;
+}
+.handRight {
+  transform-origin: 100% 50%;
+}
+.playing .handLeft {
+  animation: handLeftShake 0.8s ease-out;
+}
+.playing .handRight {
+  animation: handRightShake 0.8s ease-out;
+}
+@keyframes handLeftShake {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  30% {
+    transform: translateX(1.5px) rotate(-4deg);
+  }
+  60% {
+    transform: translateX(-1px) rotate(2deg);
+  }
+}
+@keyframes handRightShake {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  30% {
+    transform: translateX(-1.5px) rotate(4deg);
+  }
+  60% {
+    transform: translateX(1px) rotate(-2deg);
+  }
+}
+
+/* ---------- Briefcase (enterprise) ---------- */
+.clasp {
+  transform-origin: 50% 100%;
+}
+.playing .clasp {
+  animation: claspPop 0.7s ease-out;
+}
+@keyframes claspPop {
+  0%,
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+  40% {
+    transform: translateY(-2px) scaleY(1.15);
+  }
+  70% {
+    transform: translateY(0.5px) scaleY(0.95);
+  }
+}
+
+/* ---------- Layers (industries / microservices) ---------- */
+.layerTop {
+  transform-origin: 50% 50%;
+}
+.playing .layerTop {
+  animation: layerShift 0.8s ease-out;
+}
+.layerMid {
+  transform-origin: 50% 50%;
+}
+.playing .layerMid {
+  animation: layerShiftSoft 0.8s ease-out 0.05s;
+}
+@keyframes layerShift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  40% {
+    transform: translate(1.5px, -2px);
+  }
+  70% {
+    transform: translate(-0.5px, 0.5px);
+  }
+}
+@keyframes layerShiftSoft {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  40% {
+    transform: translate(0.8px, -1px);
+  }
+}
+
+/* ---------- Cube (solutions) ---------- */
+.cubeFaceLeft {
+  transform-origin: 50% 50%;
+}
+.cubeFaceRight {
+  transform-origin: 50% 50%;
+}
+.playing .cubeFaceLeft {
+  animation: cubeOpenLeft 0.8s ease-out;
+}
+.playing .cubeFaceRight {
+  animation: cubeOpenRight 0.8s ease-out;
+}
+@keyframes cubeOpenLeft {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-1.5px, 0.5px);
+  }
+}
+@keyframes cubeOpenRight {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(1.5px, 0.5px);
+  }
+}
+
+/* ---------- Sparkle (why us / intelligent) ---------- */
+.sparkleMain {
+  transform-origin: 50% 50%;
+}
+.sparkleMini {
+  transform-origin: 50% 50%;
+  opacity: 0.6;
+}
+.playing .sparkleMain {
+  animation: sparklePulse 0.9s ease-out;
+}
+.playing .sparkleMini {
+  animation: sparkleTwinkle 0.9s ease-out 0.12s;
+}
+@keyframes sparklePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  45% {
+    transform: scale(1.28);
+    opacity: 0.75;
+  }
+}
+@keyframes sparkleTwinkle {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+/* ---------- Image / gallery (work) ---------- */
+.sun {
+  transform-origin: 50% 50%;
+}
+.playing .sun {
+  animation: sunGlow 0.9s ease-out;
+}
+.mountain {
+  transform-origin: 50% 100%;
+}
+.playing .mountain {
+  animation: mountainRise 0.7s ease-out;
+}
+@keyframes sunGlow {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.25);
+  }
+}
+@keyframes mountainRise {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Paper plane (contact) ---------- */
+.plane {
+  transform-origin: 30% 70%;
+}
+.playing .plane {
+  animation: planeDart 0.7s ease-out;
+}
+@keyframes planeDart {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  40% {
+    transform: translate(2.5px, -2.5px) rotate(8deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+/* ---------- Dots (more menu) ---------- */
+.dot {
+  transform-origin: 50% 50%;
+}
+.playing .dot:nth-child(1) {
+  animation: dotHop 0.6s ease-out;
+}
+.playing .dot:nth-child(2) {
+  animation: dotHop 0.6s ease-out 0.08s;
+}
+.playing .dot:nth-child(3) {
+  animation: dotHop 0.6s ease-out 0.16s;
+}
+@keyframes dotHop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* ---------- Zap (event-driven) ---------- */
+.bolt {
+  transform-origin: 50% 50%;
+}
+.playing .bolt {
+  animation: boltFlicker 0.7s steps(1, end);
+}
+@keyframes boltFlicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0.35;
+  }
+  35% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0.4;
+  }
+  70% {
+    opacity: 1;
+  }
+}
+
+/* ---------- Mail (footer) ---------- */
+.flap {
+  transform-origin: 50% 0%;
+}
+.playing .flap {
+  animation: flapOpen 0.8s ease-out;
+}
+@keyframes flapOpen {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  45% {
+    transform: scaleY(0.55);
+  }
+}
+
+/* ---------- Phone (footer) ---------- */
+.handset {
+  transform-origin: 50% 20%;
+}
+.playing .handset {
+  animation: phoneRing 0.6s ease-out 2;
+}
+@keyframes phoneRing {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(12deg);
+  }
+  75% {
+    transform: rotate(-12deg);
+  }
+}
+
+/* ---------- Map pin (footer) ---------- */
+.pin {
+  transform-origin: 50% 100%;
+}
+.playing .pin {
+  animation: pinDrop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes pinDrop {
+  0% {
+    transform: translateY(-6px) scale(0.9);
+    opacity: 0.5;
+  }
+  60% {
+    transform: translateY(0) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ---------- Check (why-us / capability tiles) ---------- */
+.checkMark {
+  transform-origin: 50% 50%;
+}
+.playing .checkMark {
+  animation: checkPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes checkPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

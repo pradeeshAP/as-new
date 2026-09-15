@@ -1,0 +1,21 @@
+.dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  pointer-events: none;
+  z-index: 300;
+  will-change: transform;
+  transition: width var(--dur-fast) var(--ease-out), height var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.dot.hovering {
+  width: 34px;
+  height: 34px;
+  background: rgba(200, 151, 76, 0.25);
+  border: 1.5px solid var(--gold);
+}
