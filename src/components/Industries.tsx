@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { industries } from "../data/content";
 import { industriesMeta } from "../data/industriesMeta";
 import { globeImage, industryImages } from "../data/media";
@@ -109,7 +109,6 @@ export function Industries() {
   const reduced = useReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const dragState = useRef({ dragging: false, moved: false, startX: 0, startScroll: 0 });
 
@@ -117,8 +116,20 @@ export function Industries() {
   const revealHeading = useReveal(0.08);
   const revealDescription = useReveal(0.16);
 
-  // Scrolls so that card i's own center lands on the track's visual center (not its left edge).
-  const scrollToIndex = (i: number) => {
+  // Real card count, and a tripled list (prev-set / real-set / next-set) so the carousel can
+  // scroll infinitely in either direction — the clones make the wrap invisible.
+  const count = industries.items.length;
+  const displayItems = useMemo(
+    () => [...industries.items, ...industries.items, ...industries.items],
+    [],
+  );
+  // "activePos" indexes into displayItems (always kept within the middle set's [count, 2*count)
+  // range right after any scroll settles), so it directly tells each card whether it's centered.
+  const [activePos, setActivePos] = useState(count);
+  const activeReal = ((activePos % count) + count) % count;
+
+  // Scrolls so that displayItems[i]'s own center lands on the track's visual center.
+  const scrollToPos = (i: number, smooth: boolean) => {
     const track = trackRef.current;
     const el = cardRefs.current[i];
     if (!track || !el) return;
@@ -126,25 +137,59 @@ export function Industries() {
     const elRect = el.getBoundingClientRect();
     const elLeftInTrack = elRect.left - trackRect.left + track.scrollLeft;
     const target = elLeftInTrack + elRect.width / 2 - track.clientWidth / 2;
-    track.scrollTo({ left: target, behavior: reduced ? "auto" : "smooth" });
+    if (smooth && !reduced) {
+      track.scrollTo({ left: target, behavior: "smooth" });
+    } else {
+      track.scrollLeft = target;
+    }
   };
 
-  const scrollBy = (dir: 1 | -1) => {
-    const next = Math.min(Math.max(active + dir, 0), industries.items.length - 1);
-    scrollToIndex(next);
+  const goToPos = (i: number) => {
+    scrollToPos(i, true);
+    setActivePos(i);
   };
+
+  const scrollBy = (dir: 1 | -1) => goToPos(activePos + dir);
+
+  // Jumps to whichever occurrence of real index j is nearest the current position, so clicking
+  // a dot never triggers an unnecessarily long scroll across the whole tripled track.
+  const scrollToRealIndex = (j: number) => {
+    const candidates = [j, count + j, 2 * count + j];
+    let best = candidates[0];
+    let bestDist = Infinity;
+    for (const c of candidates) {
+      const dist = Math.abs(c - activePos);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = c;
+      }
+    }
+    goToPos(best);
+  };
+
+  // Center the very first card before paint so the initial frame never flashes the wrong set.
+  useLayoutEffect(() => {
+    scrollToPos(count, false);
+    setActivePos(count);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Whichever card's center is closest to the track's visual center becomes "active" —
   // recomputed continuously during scroll/drag so the pop-out follows the eye, not the index.
+  // Once scrolling settles, if that card sits in a clone set, silently re-center on the
+  // equivalent card in the real (middle) set — identical content, so the jump is invisible —
+  // which is what makes the loop continue forever instead of stopping at either end.
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
     let raf = 0;
-    const measure = () => {
+    let settleTimer = 0;
+
+    const closestIndex = () => {
       const trackRect = track.getBoundingClientRect();
       const centerX = trackRect.left + trackRect.width / 2;
-      let closestIndex = 0;
+      let closest = 0;
       let closestDist = Infinity;
       cardRefs.current.forEach((el, i) => {
         if (!el) return;
@@ -152,37 +197,55 @@ export function Industries() {
         const dist = Math.abs(rect.left + rect.width / 2 - centerX);
         if (dist < closestDist) {
           closestDist = dist;
-          closestIndex = i;
+          closest = i;
         }
       });
-      setActive(closestIndex);
+      return closest;
+    };
+
+    const measure = () => {
+      setActivePos(closestIndex());
+    };
+
+    const settle = () => {
+      const closest = closestIndex();
+      if (closest >= 2 * count) {
+        scrollToPos(closest - count, false);
+        setActivePos(closest - count);
+      } else if (closest < count) {
+        scrollToPos(closest + count, false);
+        setActivePos(closest + count);
+      }
     };
 
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(measure);
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(settle, 140);
     };
 
-    measure();
     track.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
       track.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       cancelAnimationFrame(raf);
+      window.clearTimeout(settleTimer);
     };
-  }, []);
+  }, [count]);
 
-  // Autoplay — advances one card at a time, re-arming off the real active index so it never
-  // drifts out of sync with whatever the visitor just scrolled or dragged to.
+  // Autoplay — advances one card at a time, re-arming off the real active position so it never
+  // drifts out of sync with whatever the visitor just scrolled or dragged to. Never clamps, so
+  // the carousel just keeps moving — the settle-effect above makes the wrap seamless.
   useEffect(() => {
     if (reduced || paused) return;
     const id = window.setTimeout(() => {
-      const next = active + 1 >= industries.items.length ? 0 : active + 1;
-      scrollToIndex(next);
+      goToPos(activePos + 1);
     }, AUTOPLAY_DELAY);
     return () => window.clearTimeout(id);
-  }, [reduced, paused, active]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reduced, paused, activePos]);
 
   // Click-and-drag scrolling — native overflow-x only responds to touch, so desktop needs this.
   // Touch/pen pointers are left alone so native touch scrolling keeps its momentum feel.
@@ -296,13 +359,13 @@ export function Industries() {
           onPointerUp={endDrag}
           onPointerLeave={endDrag}
         >
-          {industries.items.map((item, i) => (
+          {displayItems.map((item, i) => (
             <IndustryCard
-              key={item}
+              key={`${item}-${i}`}
               item={item}
-              index={i}
+              index={i % count}
               reduced={reduced}
-              isCenter={active === i}
+              isCenter={activePos === i}
               registerRef={(el) => {
                 cardRefs.current[i] = el;
               }}
@@ -336,10 +399,10 @@ export function Industries() {
             key={item}
             type="button"
             role="tab"
-            aria-selected={active === i}
+            aria-selected={activeReal === i}
             aria-label={item}
-            className={`${styles.dot} ${active === i ? styles.dotActive : ""}`}
-            onClick={() => scrollToIndex(i)}
+            className={`${styles.dot} ${activeReal === i ? styles.dotActive : ""}`}
+            onClick={() => scrollToRealIndex(i)}
           />
         ))}
       </div>
@@ -370,7 +433,7 @@ export function Industries() {
         <span
           className={styles.paginationDot}
           style={{
-            transform: `translateY(${(active / Math.max(industries.items.length - 1, 1)) * 60}px)`,
+            transform: `translateY(${(activeReal / Math.max(count - 1, 1)) * 60}px)`,
           }}
         />
       </div>

@@ -10,4 +10,17 @@
   height: 100%;
   display: block;
   pointer-events: none;
+  animation: fadeIn 0.5s var(--ease-out);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas {
+    animation: none;
+  }
 }

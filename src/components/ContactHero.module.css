@@ -34,7 +34,10 @@
   position: relative;
   z-index: 1;
   padding-top: clamp(7.5rem, 13vw, 9.5rem);
-  padding-bottom: clamp(3.5rem, 7vw, 5rem);
+  /* Generous enough to always clear the absolutely-positioned .scrollCue below —
+     otherwise a wrapped quick-link pill (or a short viewport) pushes the links
+     right into the cue's reserved space. */
+  padding-bottom: clamp(6.5rem, 12vw, 8.5rem);
   display: flex;
   flex-direction: column;
   align-items: center;

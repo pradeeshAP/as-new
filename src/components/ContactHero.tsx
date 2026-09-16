@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { contactPage, footer } from "../data/content";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import { useEnter } from "../hooks/useScrollReveal";
-import { ContactHeroArt } from "./ContactHeroArt";
 import styles from "./ContactHero.module.css";
 import { MailIcon, PhoneIcon } from "./icons/Icons";
 import { Magnetic } from "./Magnetic";
@@ -30,7 +29,11 @@ export function ContactHero() {
     <section id="top" className={styles.hero} ref={sectionRef}>
       <div className={styles.media}>
         <motion.div style={{ y: reduced ? undefined : artY, position: "absolute", inset: 0 }}>
-          <Suspense fallback={<ContactHeroArt />}>
+          {/* No fallback illustration here on purpose — swapping one fully-drawn scene
+              for another (the flat SVG, then the WebGL envelope) was the visible flash.
+              The section's own dark background already covers the brief load window;
+              the canvas fades in (see its CSS) once the WebGL scene is ready. */}
+          <Suspense fallback={null}>
             <ContactHeroScene reduced={reduced} />
           </Suspense>
         </motion.div>
