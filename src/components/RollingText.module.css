@@ -31,7 +31,6 @@
   inset: 0;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  will-change: transform;
 }
 
 .face {

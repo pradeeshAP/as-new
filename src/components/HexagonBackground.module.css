@@ -1,0 +1,48 @@
+.field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Skip layout/paint entirely for whichever hexagon fields are off-screen — with
+     hundreds of cells per field across the page, this is what keeps the field from
+     costing anything while the user isn't looking at it. */
+  content-visibility: auto;
+  -webkit-mask-image: radial-gradient(ellipse 85% 78% at 50% 42%, #000 0%, transparent 90%);
+  mask-image: radial-gradient(ellipse 85% 78% at 50% 42%, #000 0%, transparent 90%);
+}
+
+.hexagon {
+  position: absolute;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  background: rgba(227, 192, 136, 0.07);
+  border: 1px solid rgba(227, 192, 136, 0.28);
+  /* Static by design — with hundreds of cells per field, giving every single one its
+     own infinite CSS animation (as this used to) meant hundreds of concurrently
+     animating layers at all times, which is what was making scroll and cursor
+     movement feel heavy specifically on sections with a hexagon field. The only
+     motion left is the cursor-proximity glow below, which touches at most a
+     handful of cells at once. */
+  transition: border-color 0.2s var(--ease-out), background-color 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out);
+}
+
+/* Cursor-reactive highlight — set imperatively (not via React state) as the pointer
+   passes near a hexagon; --hex-glow (0–1) carries the proximity falloff. */
+.hexActive {
+  border-color: rgba(200, 151, 76, var(--hex-glow, 0.6));
+  background: rgba(200, 151, 76, calc(var(--hex-glow, 0.6) * 0.2));
+  box-shadow: 0 0 calc(var(--hex-glow, 0.6) * 24px) rgba(200, 151, 76, calc(var(--hex-glow, 0.6) * 0.5));
+}
+
+/* ---------- Light-surface variant (cream/white sections) ---------- */
+.light .hexagon {
+  background: rgba(200, 151, 76, 0.1);
+  border-color: rgba(168, 118, 48, 0.55);
+  border-width: 1.5px;
+}
+
+.light .hexActive {
+  border-color: rgba(178, 128, 56, var(--hex-glow, 0.7));
+  background: rgba(178, 128, 56, calc(var(--hex-glow, 0.7) * 0.16));
+  box-shadow: 0 0 calc(var(--hex-glow, 0.7) * 20px) rgba(178, 128, 56, calc(var(--hex-glow, 0.7) * 0.35));
+}

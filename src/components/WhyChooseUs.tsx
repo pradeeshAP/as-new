@@ -1,10 +1,11 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useRef } from "react";
 import { trust, whyChooseUs } from "../data/content";
 import { whyChooseUsImage } from "../data/media";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import { useReveal } from "../hooks/useScrollReveal";
 import { BriefcaseIcon, CubeIcon, GearIcon, HandshakeIcon, LayersIcon, SparkleIcon } from "./icons/Icons";
+import { HexagonBackground } from "./HexagonBackground";
 import { Magnetic } from "./Magnetic";
 import { RollingText } from "./RollingText";
 import styles from "./WhyChooseUs.module.css";
@@ -41,10 +42,28 @@ export function WhyChooseUs() {
 
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+
+  // Parent-driven stagger — one viewport trigger cascades every row in a single,
+  // unified sweep instead of each row racing its own independent observer.
+  const listVariants: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: reduced ? 0 : 0.09, delayChildren: reduced ? 0 : 0.05 } },
+  };
+  const rowVariants: Variants = {
+    hidden: { opacity: 0, x: reduced ? 0 : -22, scale: reduced ? 1 : 0.98 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: { duration: reduced ? 0.01 : 0.6, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
 
   return (
     <section id="why-us" className={styles.section} ref={sectionRef}>
+      <HexagonBackground tone="light" hexagonSize={72} className={styles.hexagons} />
+
       <div className="container">
         <div className={styles.grid}>
           <div className={styles.left}>
@@ -82,7 +101,16 @@ export function WhyChooseUs() {
                 alt={whyChooseUsImage.alt}
                 className={styles.image}
                 loading="lazy"
-                style={reduced ? undefined : { y: imageY, scale: 1.16 }}
+                // Zooming from the image's own center (the default transform-origin)
+                // crops evenly off every edge — including straight through the top of
+                // his head, since he's framed close to the top of the source photo.
+                // Anchoring the zoom near the top instead spends nearly all of that
+                // crop on the (empty) floor at the bottom, where it doesn't matter.
+                style={
+                  reduced
+                    ? undefined
+                    : { y: imageY, scale: 1.2, transformOrigin: "50% 10%" }
+                }
               />
               <div className={styles.imageScrim} aria-hidden="true" />
             </motion.div>
@@ -107,18 +135,17 @@ export function WhyChooseUs() {
             </span>
 
             <motion.div {...revealPanel} className={styles.panel}>
-              <ul className={styles.reasonList}>
+              <motion.ul
+                className={styles.reasonList}
+                variants={listVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+              >
                 {whyChooseUs.reasons.map((reason, i) => {
                   const Icon = REASON_ICONS[i % REASON_ICONS.length];
                   return (
-                    <motion.li
-                      key={reason}
-                      className={styles.reasonRow}
-                      initial={{ opacity: 0, x: reduced ? 0 : -14 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-                      transition={{ duration: reduced ? 0.01 : 0.5, delay: reduced ? 0 : i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                    >
+                    <motion.li key={reason} className={styles.reasonRow} variants={rowVariants}>
                       <span className={styles.reasonIcon}>
                         <Icon size={20} />
                       </span>
@@ -127,7 +154,7 @@ export function WhyChooseUs() {
                     </motion.li>
                   );
                 })}
-              </ul>
+              </motion.ul>
 
               <div className={styles.panelFooter}>
                 <Magnetic>

@@ -1,0 +1,216 @@
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  padding: 0.6em 1.1em;
+  border-radius: var(--radius-pill);
+  background: var(--gold-tint);
+  border: 1px solid rgba(200, 151, 76, 0.3);
+  color: var(--gold-dark);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.badgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  animation: badgePulse 1.8s var(--ease-in-out) infinite;
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(200, 151, 76, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(200, 151, 76, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badgeDot {
+    animation: none;
+  }
+}
+
+.card {
+  background: var(--ink);
+  color: var(--on-dark);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.cardTitle {
+  font-size: var(--fs-h4);
+  color: var(--on-dark);
+  margin-bottom: 0.4rem;
+}
+
+.cardDescription {
+  color: var(--on-dark-muted);
+  font-size: 0.9375rem;
+  margin-bottom: var(--space-sm);
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding-block: 0.9rem;
+  padding-inline: 0.5rem;
+  margin-inline: -0.5rem;
+  border-radius: var(--radius-sm);
+  border-bottom: 1px solid var(--ink-line);
+  transition: background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.contactRow:first-child {
+  padding-top: 0;
+}
+
+.contactRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+a.contactRow:hover {
+  background: var(--ink-line);
+  transform: translateX(4px);
+}
+
+.contactIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--gold-tint);
+  color: var(--gold);
+  transition: transform var(--dur-med) var(--ease-out), background-color var(--dur-med) var(--ease-out);
+}
+
+.contactRow:hover .contactIcon {
+  transform: scale(1.1) rotate(-6deg);
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.contactText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.contactLabel {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-dark-muted);
+}
+
+.contactValue {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--on-dark);
+  line-height: 1.4;
+}
+
+.processCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.processTitle {
+  font-size: var(--fs-h4);
+  margin-bottom: var(--space-sm);
+}
+
+.steps {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.stepLine {
+  position: absolute;
+  left: 1.15rem;
+  top: 1.4rem;
+  bottom: 1.4rem;
+  width: 1px;
+  background: var(--border);
+  transform-origin: top;
+}
+
+.stepLineFill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: var(--gold);
+  transform-origin: top;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  padding-left: 0;
+}
+
+.stepIndex {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1.5px solid var(--gold);
+  color: var(--gold-dark);
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.stepBody {
+  padding-top: 0.15rem;
+}
+
+.stepTitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.stepDetail {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+  line-height: 1.5;
+}

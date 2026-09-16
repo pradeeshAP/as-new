@@ -1,0 +1,207 @@
+.art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+}
+
+.bgGlow {
+  animation: bgPulse 9s var(--ease-in-out) infinite;
+  transform-box: view-box;
+  transform-origin: 450px 450px;
+}
+
+@keyframes bgPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.ring1,
+.ring2,
+.ring3 {
+  transform-box: view-box;
+  transform-origin: 450px 450px;
+}
+
+.ring1 {
+  animation: spinCw 70s linear infinite;
+}
+
+.ring2 {
+  animation: spinCcw 54s linear infinite;
+}
+
+.ring3 {
+  animation: spinCw 38s linear infinite;
+}
+
+@keyframes spinCw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinCcw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: nodePulse 3.6s var(--ease-in-out) infinite;
+}
+
+.node1 {
+  animation-delay: 0s;
+}
+.node2 {
+  animation-delay: 0.5s;
+}
+.node3 {
+  animation-delay: 1s;
+}
+.node4 {
+  animation-delay: 1.5s;
+}
+.node5 {
+  animation-delay: 2s;
+}
+.node6 {
+  animation-delay: 2.5s;
+}
+
+@keyframes nodePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+.flowLines path {
+  stroke-dasharray: 4 14;
+  animation: flowMove 3s linear infinite;
+}
+
+.flow1 {
+  animation-delay: 0s;
+}
+.flow2 {
+  animation-delay: 0.4s;
+}
+.flow3 {
+  animation-delay: 0.8s;
+}
+.flow4 {
+  animation-delay: 1.2s;
+}
+.flow5 {
+  animation-delay: 1.6s;
+}
+.flow6 {
+  animation-delay: 2s;
+}
+
+@keyframes flowMove {
+  from {
+    stroke-dashoffset: 200;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hub {
+  transform-box: view-box;
+  transform-origin: 450px 450px;
+}
+
+.hubHalo {
+  animation: haloBreathe 5s var(--ease-in-out) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes haloBreathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.7;
+  }
+}
+
+.particle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: particleFloat 7s var(--ease-in-out) infinite;
+}
+
+.p1 {
+  animation-delay: 0s;
+}
+.p2 {
+  animation-delay: 1.2s;
+}
+.p3 {
+  animation-delay: 2.4s;
+}
+.p4 {
+  animation-delay: 3.6s;
+}
+.p5 {
+  animation-delay: 4.8s;
+}
+
+@keyframes particleFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-18px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bgGlow,
+  .ring1,
+  .ring2,
+  .ring3,
+  .node,
+  .flowLines path,
+  .hubHalo,
+  .particle {
+    animation: none;
+  }
+}

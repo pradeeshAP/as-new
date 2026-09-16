@@ -220,6 +220,90 @@ export const finalCta = {
   cta: "Get In Touch",
 };
 
+// Copy for the dedicated Contact page — a new page, so authored here rather than
+// transcribed from content.md. Follows the same voice as the rest of the site.
+export const contactPage = {
+  eyebrow: "Let's Talk",
+  heading: "Tell us about your project.",
+  description:
+    "Share a few details about what you're building and our team will get back to you within one business day — no sales runaround, just a straight answer on how we can help.",
+  form: {
+    heading: "Start the conversation",
+    description: "Fill in what you can — even a rough idea is a great place to start.",
+    fields: {
+      name: "Full Name",
+      email: "Work Email",
+      phone: "Phone Number",
+      company: "Company Name",
+    },
+    interestsLabel: "What are you looking for?",
+    interests: [
+      "Microservices & Event-Driven Systems",
+      "Cloud Enablement & DevOps",
+      "AI & Intelligent Automation",
+      "Data & Analytics",
+      "API Management & Integration",
+      "Digital Experience & Platforms",
+      "Security & Compliance",
+      "Legacy Modernization",
+    ],
+    budgetLabel: "Estimated Budget",
+    budgets: ["Not sure yet", "Under $10K", "$10K – $50K", "$50K – $150K", "$150K+"],
+    messageLabel: "Tell us about your project",
+    messagePlaceholder:
+      "What are you building, what problem are you solving, and what does success look like?",
+    submit: "Send Message",
+    submitting: "Sending…",
+    success: {
+      heading: "Message received.",
+      description: "Thank you for reaching out — a member of our team will be in touch within one business day.",
+    },
+    privacyNote: "Your information stays confidential and is never shared with third parties.",
+  },
+  info: {
+    heading: "Reach us directly",
+    description: "Prefer to skip the form? Here's how to find us.",
+  },
+  process: {
+    heading: "What happens next",
+    steps: [
+      {
+        title: "We review your brief",
+        detail: "Our team reads through what you share and maps it to the right specialists.",
+      },
+      {
+        title: "Discovery call",
+        detail: "A short call to understand your goals, constraints and timeline in more depth.",
+      },
+      {
+        title: "Proposal & roadmap",
+        detail: "You receive a clear scope, timeline and approach for moving forward together.",
+      },
+    ],
+  },
+  faq: {
+    heading: "Common questions",
+    items: [
+      {
+        q: "How quickly will I hear back?",
+        a: "We respond to every enquiry within one business day, usually sooner.",
+      },
+      {
+        q: "Do you work with early-stage startups as well as enterprises?",
+        a: "Yes — our engagements range from early product builds to large-scale enterprise modernization.",
+      },
+      {
+        q: "Can you sign an NDA before we discuss details?",
+        a: "Absolutely. Mention it in your message and we'll have one ready before the discovery call.",
+      },
+      {
+        q: "What does the initial engagement look like?",
+        a: "Most projects start with a discovery call, followed by a scoped proposal outlining approach, timeline and cost.",
+      },
+    ],
+  },
+};
+
 export const footer = {
   description:
     "Ascending Software provides complete digital engineering solutions across industries — an innovative, enthusiastic team delivering quality at every layer of the stack.",

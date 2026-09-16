@@ -14,8 +14,9 @@
 
 .nav.scrolled {
   padding-block: var(--space-2xs);
-  background: rgba(10, 9, 8, 0.85);
-  backdrop-filter: blur(14px);
+  /* Solid fill instead of backdrop-filter: blur — a fixed, always-on-screen bar that
+     re-blurred its background on every scroll frame was a steady source of scroll jank. */
+  background: rgba(10, 9, 8, 0.96);
   border-bottom: 1px solid var(--ink-line);
   box-shadow: var(--shadow-md);
 }
@@ -178,10 +179,9 @@
   max-width: 18rem;
   padding: 1.4rem 1.6rem;
   border-radius: var(--radius-md);
-  background: rgba(15, 13, 10, 0.96);
+  background: rgba(15, 13, 10, 0.98);
   border: 1px solid var(--ink-line-strong);
   box-shadow: var(--shadow-lg);
-  backdrop-filter: blur(18px);
   z-index: 5;
 }
 

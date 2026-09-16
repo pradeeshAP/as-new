@@ -4,7 +4,13 @@
   overflow: hidden;
 }
 
+.hexagons {
+  z-index: 0;
+}
+
 .grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-xl);
@@ -90,7 +96,9 @@
   aspect-ratio: 0.86;
   margin-inline: auto;
   overflow: hidden;
-  clip-path: polygon(7% 0%, 100% 0%, 100% 93%, 93% 100%, 0% 100%, 0% 7%);
+  /* Only the bottom-right corner is clipped — the portrait's subject sits high and to
+     the left of frame, so a top-left notch there was slicing straight through his head. */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 93%, 93% 100%, 0% 100%);
 }
 
 @media (min-width: 1000px) {

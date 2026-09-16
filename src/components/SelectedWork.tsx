@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { selectedWork } from "../data/content";
 import { selectedWorkImages } from "../data/media";
@@ -58,23 +58,36 @@ export function SelectedWork() {
 
   const progressPct = (active / Math.max(selectedWork.projects.length - 1, 1)) * 100;
 
+  // Each entry cascades its own children in (number → heading → image) on top of the
+  // card-level reveal, so scrolling a new project into view reads as a small sequence
+  // rather than one flat fade.
+  const entryVariants: Variants = {
+    hidden: { opacity: 0, y: reduced ? 0 : 44, scale: reduced ? 1 : 0.97 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: reduced ? 0.01 : 0.7,
+        ease: [0.16, 1, 0.3, 1],
+        staggerChildren: reduced ? 0 : 0.09,
+        delayChildren: reduced ? 0 : 0.05,
+      },
+    },
+  };
+  const entryChildVariants: Variants = {
+    hidden: { opacity: 0, y: reduced ? 0 : 18 },
+    visible: { opacity: 1, y: 0, transition: { duration: reduced ? 0.01 : 0.5, ease: [0.16, 1, 0.3, 1] } },
+  };
+  const entryImageVariants: Variants = {
+    hidden: { opacity: 0, scale: reduced ? 1 : 1.08 },
+    visible: { opacity: 1, scale: 1, transition: { duration: reduced ? 0.01 : 0.7, ease: [0.16, 1, 0.3, 1] } },
+  };
+
   return (
     <section id="work" className={styles.section}>
       <div className={`container ${styles.layout}`}>
         <div className={styles.left}>
-          <motion.div {...revealEyebrow} className={styles.eyebrow}>
-            <span className={styles.eyebrowDot} aria-hidden="true" />
-            {selectedWork.label}
-          </motion.div>
-
-          <motion.h2 {...revealHeading} className={styles.heading}>
-            <AccentHeading text={selectedWork.heading} />
-          </motion.h2>
-
-          <motion.p {...revealDescription} className={styles.description}>
-            {selectedWork.description}
-          </motion.p>
-
           <motion.div {...revealArtwork} className={styles.artwork}>
             <span className={styles.ring} aria-hidden="true" />
 
@@ -140,6 +153,19 @@ export function SelectedWork() {
               </div>
             </div>
           </motion.div>
+
+          <motion.div {...revealEyebrow} className={styles.eyebrow}>
+            <span className={styles.eyebrowDot} aria-hidden="true" />
+            {selectedWork.label}
+          </motion.div>
+
+          <motion.h2 {...revealHeading} className={styles.heading}>
+            <AccentHeading text={selectedWork.heading} />
+          </motion.h2>
+
+          <motion.p {...revealDescription} className={styles.description}>
+            {selectedWork.description}
+          </motion.p>
         </div>
 
         <div className={styles.right}>
@@ -150,49 +176,49 @@ export function SelectedWork() {
                 entryRefs.current[i] = el;
               }}
               className={`${styles.entry} ${active === i ? styles.entryActive : ""}`}
-              initial={{ opacity: 0, y: reduced ? 0 : 36 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              variants={entryVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-              transition={{
-                duration: reduced ? 0.01 : 0.65,
-                delay: reduced ? 0 : Math.min(i * 0.08, 0.4),
-                ease: [0.16, 1, 0.3, 1],
-              }}
             >
-              <span className={styles.entryDot} aria-hidden="true" />
-              <span className={styles.entryNumber}>{project.number}</span>
+              <motion.span className={styles.entryDot} aria-hidden="true" variants={entryChildVariants} />
+              <motion.span className={styles.entryNumber} variants={entryChildVariants}>
+                {project.number}
+              </motion.span>
 
               <a href="#contact" className={styles.entryContent}>
-                <div className={styles.entryHead}>
+                <motion.div className={styles.entryHead} variants={entryChildVariants}>
                   <h3 className={styles.entryName}>{project.name}</h3>
                   <span className={styles.entryType}>{project.type}</span>
-                </div>
+                </motion.div>
 
-                <TiltImage className={styles.entryVisual} intensity={4}>
-                  <img
-                    src={PROJECT_IMAGES[i % PROJECT_IMAGES.length].src}
-                    alt={PROJECT_IMAGES[i % PROJECT_IMAGES.length].alt}
-                    className={styles.entryImg}
-                    loading="lazy"
-                  />
-                  <div className={styles.entryScrim} aria-hidden="true" />
-                  <span className={styles.entryTagline} aria-hidden="true">
-                    {project.tagline.map((line) => (
-                      <span key={line}>{line}</span>
-                    ))}
-                  </span>
-                  <span className={styles.entryArrow} aria-hidden="true">
-                    <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
-                      <path
-                        d={ARROW_PATH}
-                        stroke="currentColor"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                </TiltImage>
+                <motion.div variants={entryImageVariants}>
+                  <TiltImage className={styles.entryVisual} intensity={4}>
+                    <img
+                      src={PROJECT_IMAGES[i % PROJECT_IMAGES.length].src}
+                      alt={PROJECT_IMAGES[i % PROJECT_IMAGES.length].alt}
+                      className={styles.entryImg}
+                      loading="lazy"
+                    />
+                    <div className={styles.entryScrim} aria-hidden="true" />
+                    <span className={styles.entryTagline} aria-hidden="true">
+                      {project.tagline.map((line) => (
+                        <span key={line}>{line}</span>
+                      ))}
+                    </span>
+                    <span className={styles.entryArrow} aria-hidden="true">
+                      <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
+                        <path
+                          d={ARROW_PATH}
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </TiltImage>
+                </motion.div>
               </a>
             </motion.div>
           ))}

@@ -6,6 +6,11 @@
   color: var(--on-dark);
 }
 
+/* ---------- Ambient hexagon backdrop ---------- */
+.hexagons {
+  z-index: 0;
+}
+
 /* ---------- Decorative globe (top right) ---------- */
 .globe {
   position: absolute;
@@ -15,6 +20,7 @@
   aspect-ratio: 1;
   pointer-events: none;
   display: none;
+  z-index: 1;
 }
 
 @media (min-width: 1100px) {
@@ -453,6 +459,8 @@
 
 /* ---------- Clickable pagination dots ---------- */
 .dots {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -484,6 +492,8 @@
 
 /* ---------- Footer row ---------- */
 .footerRow {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: var(--space-md);

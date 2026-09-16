@@ -6,6 +6,7 @@ import { industriesMeta } from "../data/industriesMeta";
 import { globeImage, industryImages } from "../data/media";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import { useReveal } from "../hooks/useScrollReveal";
+import { HexagonBackground } from "./HexagonBackground";
 import { Magnetic } from "./Magnetic";
 import { RollingText } from "./RollingText";
 import styles from "./Industries.module.css";
@@ -50,11 +51,11 @@ function IndustryCard({ item, index, isCenter, reduced, registerRef }: IndustryC
     <motion.div
       ref={registerRef}
       className={styles.cardOuter}
-      initial={{ opacity: 0, y: reduced ? 0 : 80, scale: reduced ? 1 : 0.82, filter: reduced ? "none" : "blur(14px)" }}
-      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: reduced ? 0 : 80, scale: reduced ? 1 : 0.82 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
       transition={{
-        duration: reduced ? 0.01 : 1.8,
+        duration: reduced ? 0.01 : 1.1,
         delay: reduced ? 0 : Math.min(index * 0.22, 1.5),
         ease: [0.16, 1, 0.3, 1],
       }}
@@ -215,6 +216,8 @@ export function Industries() {
 
   return (
     <section id="industries" className={`${styles.section} grain`}>
+      <HexagonBackground hexagonSize={84} className={styles.hexagons} />
+
       <div className={styles.globe} aria-hidden="true">
         <div className={styles.globeClip}>
           <img src={globeImage.src} alt="" className={styles.globeImg} />

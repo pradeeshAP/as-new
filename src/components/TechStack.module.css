@@ -8,6 +8,10 @@
 }
 
 /* ---------- Ambient premium backdrop (no images) ---------- */
+.hexagons {
+  z-index: 0;
+}
+
 .gridLines {
   position: absolute;
   inset: 0;

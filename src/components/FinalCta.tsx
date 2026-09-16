@@ -33,7 +33,7 @@ export function FinalCta() {
         </motion.p>
         <motion.div {...revealCta} className={styles.cta}>
           <Magnetic>
-            <Button href="mailto:info@ascendingsoftware.com" onDark>
+            <Button to="/contact" onDark>
               {finalCta.cta}
             </Button>
           </Magnetic>

@@ -91,7 +91,7 @@ export function Hero() {
         </motion.p>
         <motion.div {...revealActions} className={styles.actions}>
           <Magnetic>
-            <Button href="#contact">{hero.primaryCta}</Button>
+            <Button to="/contact">{hero.primaryCta}</Button>
           </Magnetic>
           <Magnetic>
             <Button href="#solutions" variant="secondary" onDark>

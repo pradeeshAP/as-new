@@ -1,8 +1,9 @@
 import type { Variants } from "framer-motion";
 import { useReducedMotion } from "./useReducedMotion";
 
-/** Shared whileInView reveal props: fade + slight vertical rise, once per element. */
-export function useReveal(delay = 0) {
+/** Shared whileInView reveal props: fade + slight vertical rise.
+ *  `once: false` re-triggers on every pass — reveals scrolling in, hides scrolling out. */
+export function useReveal(delay = 0, once = true) {
   const reduced = useReducedMotion();
 
   const variants: Variants = {
@@ -17,7 +18,7 @@ export function useReveal(delay = 0) {
   return {
     initial: "hidden",
     whileInView: "visible",
-    viewport: { once: true, margin: "-10% 0px -10% 0px" },
+    viewport: { once, margin: "-10% 0px -10% 0px" },
     variants,
   } as const;
 }

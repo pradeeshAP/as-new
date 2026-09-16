@@ -1,0 +1,349 @@
+.wrap {
+  position: relative;
+}
+
+.glow {
+  position: absolute;
+  top: -12%;
+  right: -14%;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-tint) 0%, transparent 72%);
+  pointer-events: none;
+  animation: glowPulse 9s var(--ease-in-out) infinite;
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.16) translate(-4%, 4%);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow {
+    animation: none;
+  }
+}
+
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  z-index: 1;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: var(--space-lg);
+  }
+}
+
+.tag {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4em 0.85em;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--gold-soft);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(3deg);
+}
+
+.heading {
+  font-size: var(--fs-h3);
+  max-width: 20ch;
+}
+
+.description {
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  max-width: 34ch;
+}
+
+.form {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+}
+
+@media (min-width: 640px) {
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---------- Floating-label fields ---------- */
+.field {
+  position: relative;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.5rem 1rem 0.6rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--text);
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.field textarea {
+  min-height: 8rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: var(--surface);
+  box-shadow: 0 0 0 4px var(--gold-tint);
+}
+
+.field label {
+  position: absolute;
+  left: 1rem;
+  top: 1.1rem;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: all 0.22s var(--ease-out);
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label,
+.field textarea:focus + label,
+.field textarea:not(:placeholder-shown) + label {
+  top: 0.55rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+.field.invalid input,
+.field.invalid textarea {
+  border-color: var(--error);
+}
+
+.errorText {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.8125rem;
+  color: var(--error);
+}
+
+/* ---------- Chip groups (interests / budget) ---------- */
+.groupLabel {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  margin-bottom: 0.7rem;
+  display: block;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55em 1em;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.chip:hover {
+  border-color: var(--gold);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.chipActive,
+.chipActive:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+.chipCheck {
+  display: inline-flex;
+  width: 0;
+  overflow: hidden;
+  transition: width 0.2s var(--ease-out);
+}
+
+.chipActive .chipCheck {
+  width: 1em;
+}
+
+/* ---------- Submit ---------- */
+.footerRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-2xs);
+}
+
+@media (min-width: 640px) {
+  .footerRow {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.privacyNote {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  max-width: 26ch;
+}
+
+.submitBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  padding: 1em 2em;
+  border-radius: var(--radius-pill);
+  background: var(--gold);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  box-shadow: var(--shadow-gold);
+  white-space: nowrap;
+  min-width: 11.5rem;
+  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: var(--gold-dark);
+  border-color: var(--gold-dark);
+  transform: translateY(-2px);
+}
+
+.submitBtn:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.submitIcon {
+  display: inline-flex;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.submitBtn:hover:not(:disabled) .submitIcon {
+  transform: translateX(3px);
+}
+
+.spinner {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 2px solid rgba(10, 9, 8, 0.25);
+  border-top-color: var(--ink);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: spin 1.4s steps(8) infinite;
+  }
+}
+
+/* ---------- Success state ---------- */
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+  padding-block: var(--space-lg);
+}
+
+.successIconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: var(--gold-tint);
+  color: var(--gold-dark);
+}
+
+.successHeading {
+  font-size: var(--fs-h3);
+}
+
+.successDescription {
+  color: var(--text-secondary);
+  max-width: 32ch;
+}
+
+.resetBtn {
+  margin-top: var(--space-2xs);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 0.15rem;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.resetBtn:hover {
+  color: var(--ink);
+}

@@ -1,0 +1,168 @@
+.hero {
+  position: relative;
+  min-height: min(48rem, 92vh);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Light touch only — the 3D scene should read clearly through this. Text legibility
+     comes mainly from the text-shadow on the heading/description below, not a heavy
+     vignette that would smother the animation. */
+  background: radial-gradient(50% 55% at 50% 42%, rgba(10, 9, 8, 0.45) 0%, rgba(10, 9, 8, 0.2) 60%, rgba(10, 9, 8, 0.05) 100%),
+    linear-gradient(180deg, rgba(10, 9, 8, 0.3) 0%, rgba(10, 9, 8, 0) 24%, rgba(10, 9, 8, 0.35) 66%, rgba(10, 9, 8, 0.88) 100%);
+}
+
+.grainLayer {
+  position: absolute;
+  inset: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding-top: clamp(7.5rem, 13vw, 9.5rem);
+  padding-bottom: clamp(3.5rem, 7vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: var(--on-dark-muted);
+  margin-bottom: var(--space-md);
+}
+
+.breadcrumb a {
+  color: var(--on-dark-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.breadcrumb a:hover {
+  color: var(--gold-soft);
+}
+
+.breadcrumbCurrent {
+  color: var(--gold-soft);
+  font-weight: 600;
+}
+
+.breadcrumbSep {
+  color: var(--ink-line-strong);
+}
+
+.eyebrowRow {
+  margin-bottom: var(--space-sm);
+}
+
+.heading {
+  font-size: clamp(2.5rem, 1.4rem + 4.6vw, 5rem);
+  color: var(--on-dark);
+  max-width: 22ch;
+  text-wrap: balance;
+  text-shadow: 0 4px 30px rgba(10, 9, 8, 0.85), 0 1px 3px rgba(10, 9, 8, 0.9);
+}
+
+.description {
+  font-size: var(--fs-body-lg);
+  color: var(--on-dark-muted);
+  max-width: 42ch;
+  margin-top: var(--space-sm);
+  text-shadow: 0 2px 16px rgba(10, 9, 8, 0.9);
+}
+
+.quickLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.quickLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7em 1.3em;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--ink-line-strong);
+  background: rgba(10, 9, 8, 0.35);
+  backdrop-filter: blur(10px);
+  color: var(--on-dark);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.quickLink:hover {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.scrollCue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.5rem, 4vw, 2.5rem);
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1;
+  color: var(--on-dark-muted);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scrollCueLine {
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(180deg, var(--gold) 0%, transparent 100%);
+  animation: cueFlow 2.2s var(--ease-in-out) infinite;
+}
+
+@keyframes cueFlow {
+  0% {
+    transform: scaleY(0.3);
+    opacity: 0.3;
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+    transform-origin: top;
+  }
+  100% {
+    transform: scaleY(0.3);
+    opacity: 0.3;
+    transform-origin: bottom;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollCueLine {
+    animation: none;
+  }
+}

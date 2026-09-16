@@ -1,20 +1,22 @@
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { company, footer } from "../data/content";
 import { useReveal } from "../hooks/useScrollReveal";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import { MailIcon, MapPinIcon, PhoneIcon } from "./icons/Icons";
 import styles from "./Footer.module.css";
 
-const QUICK_LINK_HREFS: Record<string, string> = {
+const QUICK_LINK_HASHES: Record<string, string> = {
   Home: "#top",
   "About Us": "#why-us",
   Services: "#solutions",
-  Contact: "#contact",
 };
 
 export function Footer() {
   const reduced = useReducedMotion();
+  const isHome = useLocation().pathname === "/";
+  const homeHref = (hash: string) => (isHome ? hash : `/${hash}`);
   const revealWordmark = useReveal();
   const revealCol0 = useReveal(0.05);
   const revealCol1 = useReveal(0.1);
@@ -53,11 +55,17 @@ export function Footer() {
         <motion.div {...revealCol1}>
           <div className={styles.colTitle}>Quick Links</div>
           <nav className={styles.colLinks}>
-            {footer.quickLinks.map((link) => (
-              <a key={link} href={QUICK_LINK_HREFS[link] ?? "#top"}>
-                {link}
-              </a>
-            ))}
+            {footer.quickLinks.map((link) =>
+              link === "Contact" ? (
+                <Link key={link} to="/contact">
+                  {link}
+                </Link>
+              ) : (
+                <a key={link} href={homeHref(QUICK_LINK_HASHES[link] ?? "#top")}>
+                  {link}
+                </a>
+              ),
+            )}
           </nav>
         </motion.div>
 
@@ -65,7 +73,7 @@ export function Footer() {
           <div className={styles.colTitle}>Services</div>
           <nav className={styles.colLinks}>
             {footer.services.map((service) => (
-              <a key={service} href="#solutions">
+              <a key={service} href={homeHref("#solutions")}>
                 {service}
               </a>
             ))}

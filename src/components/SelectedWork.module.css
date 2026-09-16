@@ -1,7 +1,13 @@
 .section {
   position: relative;
   padding-block: var(--space-2xl) var(--space-xl);
-  overflow: hidden;
+  /* No overflow-x/overflow-y here (body already clips horizontal overflow globally).
+     Setting overflow to anything but `visible` on either axis — including just
+     `overflow-x: hidden` on its own, since the spec then forces the other axis's
+     computed value to `auto` rather than leaving it `visible` — turns this element into
+     a scroll container, which silently breaks `position: sticky` on `.left` below (it
+     ends up pinned relative to this non-scrolling box instead of the viewport, which
+     produces no visible stickiness at all). */
 }
 
 .layout {
@@ -28,7 +34,7 @@
 @media (min-width: 1000px) {
   .left {
     position: sticky;
-    top: 7rem;
+    top: 6rem;
     align-self: start;
   }
 }
@@ -74,8 +80,14 @@
 /* ---------- Decorative artwork block ---------- */
 .artwork {
   position: relative;
-  margin-top: var(--space-lg);
+  margin-bottom: var(--space-lg);
   padding-bottom: var(--space-md);
+}
+
+@media (min-width: 1000px) {
+  .artwork {
+    margin-top: 1.25rem;
+  }
 }
 
 .ring {
@@ -192,7 +204,7 @@
 .progress {
   position: relative;
   z-index: 1;
-  margin-top: var(--space-md);
+  margin-top: var(--space-sm);
   width: min(20rem, 68%);
   margin-inline: auto;
 }
@@ -265,9 +277,21 @@
     position: absolute;
     left: 0.3rem;
     top: 0.85rem;
-    bottom: 5.5rem;
+    bottom: calc(5.5rem + var(--sticky-buffer, 0px));
     width: 1px;
     background: var(--border-strong);
+  }
+}
+
+@media (min-width: 1000px) {
+  /* Trailing scroll buffer so the sticky left column stays pinned through the last
+     project card too, releasing only once you've scrolled past it — not partway
+     through, before the last card has even shown. Adjusts the timeline line's own
+     stopping point (above) to compensate, so the line still ends where it always did
+     rather than stretching into this new empty space. */
+  .right {
+    --sticky-buffer: 20rem;
+    padding-bottom: var(--sticky-buffer);
   }
 }
 
@@ -278,6 +302,16 @@
   gap: var(--space-sm);
   padding-block: var(--space-md);
   border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 1000px) {
+  /* Extra breathing room here also widens the gap between this column's total height
+     and the sticky left column's — that gap is exactly how long the left column stays
+     pinned before it releases, so this keeps it pinned through effectively the whole
+     scroll instead of unsticking partway through the list. */
+  .entry {
+    padding-block: var(--space-xl);
+  }
 }
 
 .entry:first-child {

@@ -30,6 +30,10 @@
   --on-dark: #f3efe6;
   --on-dark-muted: #b7ac9a;
 
+  /* Status */
+  --error: #b3452c;
+  --error-tint: rgba(179, 69, 44, 0.1);
+
   /* Structure */
   --border: rgba(62, 54, 42, 0.14);
   --border-strong: rgba(62, 54, 42, 0.26);
